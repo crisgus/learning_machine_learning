@@ -7,6 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from cap2.region import plot_decision_regions
 from logistic import LogisticRegressionGD
+from sklearn.linear_model import LogisticRegression
 
 
 iris = datasets.load_iris()
@@ -38,3 +39,20 @@ class TrainingLogistic:
         plt.legend(loc='upper left')
         plt.tight_layout()
         plt.show()
+
+    def with_scikit(self):
+        X_combined_std = np.vstack((X_train_std, X_test_std))
+        y_combined = np.hstack((y_train, y_test))
+        lr = LogisticRegression(C=100.0, solver='lbfgs', multi_class='ovr')
+        lr.fit(X_train_std, y_train)
+        plot_decision_regions(X_combined_std, y_combined, classifier=lr, test_idx=range(105, 150))
+        plt.xlabel('Petal lenght [standardized]')
+        plt.ylabel('Petal width [standardized]')
+        plt.legend = 'upper left'
+        plt.tight_layout()
+        plt.show()
+
+
+if __name__ == '__main__':
+
+    TrainingLogistic().with_scikit()
