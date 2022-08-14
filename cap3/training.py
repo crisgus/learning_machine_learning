@@ -1,8 +1,7 @@
+from cProfile import label
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import Perceptron
-from sklearn.metrics import accuracy_score
 import numpy as np
 import matplotlib.pyplot as plt
 from cap2.region import plot_decision_regions
@@ -52,7 +51,23 @@ class TrainingLogistic:
         plt.tight_layout()
         plt.show()
 
+    def regularization(self):
+        weights, params = [], []
+        for c in np.arange(-5, 5):
+            lr = LogisticRegression(C=10.**c, multi_class='ovr')
+            lr.fit(X_train_std, y_train)
+            weights.append(lr.coef_[1])
+            params.append(10.**c)
+        weights = np.array(weights)
+        plt.plot(params, weights[:, 0], label='Petal lenght')
+        plt.plot(params, weights[:, 1], label='Petal width', linestyle='--')
+        plt.ylabel('Weight coefficient')
+        plt.xlabel('C')
+        plt.legend(loc='upper left')
+        plt.xscale('log')
+        plt.show()
+
 
 if __name__ == '__main__':
 
-    TrainingLogistic().with_scikit()
+    TrainingLogistic().regularization()
