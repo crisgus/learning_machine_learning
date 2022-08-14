@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 import numpy as np
 import matplotlib.pyplot as plt
-from cap2.region import plot_decision_regions
+from region import plot_decision_regions
 from logistic import LogisticRegressionGD
 from sklearn.linear_model import LogisticRegression
 
